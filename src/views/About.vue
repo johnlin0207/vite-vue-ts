@@ -1,15 +1,13 @@
 <template>
-  <ul>
-    <li><router-link to="/">/</router-link></li>
-    <li><router-link to="/about">/about</router-link></li>
-  </ul>
-  <router-view></router-view>
+  <div>
+    <h1>about</h1>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 export default defineComponent({
-  name: 'App',
+  name: 'About',
   setup() {
     return {};
   },
