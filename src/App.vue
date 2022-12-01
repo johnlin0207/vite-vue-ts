@@ -1,9 +1,11 @@
 <template>
-  <ul>
-    <li><router-link to="/">/</router-link></li>
-    <li><router-link to="/about">/about</router-link></li>
-  </ul>
-  <router-view></router-view>
+  <router-view v-slot="{ Component, route }">
+    <transition :name="'fade'" appear>
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </transition>
+  </router-view>
 </template>
 
 <script lang="ts">

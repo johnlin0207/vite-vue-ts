@@ -1,12 +1,11 @@
 <template>
-  <!-- vue3页面 -->
-  <div>About</div>
+  <p>404 not found</p>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 export default defineComponent({
-  name: 'App',
+  name: '404',
   setup() {
     return {};
   },

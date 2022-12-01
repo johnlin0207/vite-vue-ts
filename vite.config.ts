@@ -9,8 +9,8 @@ function _resolve(dir: string) {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  // 配置项目别名
   resolve: {
+    // 配置项目别名
     alias: {
       '@': _resolve('src'),
     },
