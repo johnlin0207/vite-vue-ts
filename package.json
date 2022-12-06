@@ -11,11 +11,13 @@
   "dependencies": {
     "axios": "^1.2.0",
     "element-plus": "^2.2.22",
+    "js-md5": "^0.7.3",
     "pinia": "^2.0.26",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@types/js-md5": "^0.4.3",
     "@types/mockjs": "^1.0.7",
     "@types/node": "^18.11.9",
     "@vitejs/plugin-vue": "^3.2.0",

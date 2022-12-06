@@ -54,7 +54,27 @@ const routesList = [
     path: '/',
     name: 'home',
     component: 'Home',
-    meta: { transition: 'slide-left' },
+    redirect: '',
+    hidden: 'false',
+    meta: '',
+  },
+  {
+    path: '/menu1',
+    name: 'menu1',
+    component: 'Menu_1',
+    redirect: '',
+    hidden: 'false',
+    meta: '',
+    children: [
+      {
+        path: 'menu1_1',
+        name: 'menu1_1',
+        component: 'Menu_1_1',
+        redirect: '',
+        hidden: 'false',
+        meta: '',
+      },
+    ],
   },
 ];
 

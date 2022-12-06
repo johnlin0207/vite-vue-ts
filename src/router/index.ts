@@ -7,6 +7,7 @@ import { isSuccess } from '@/utils/util';
 import { Routes } from '@/utils/interface';
 import { request } from '@/utils/constant';
 import { ElMessage } from 'element-plus';
+import { RouteRecordRaw } from 'vue-router';
 
 let hasSetRoute = false;
 
@@ -33,15 +34,25 @@ const constantRoute = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: constantRoute, // `routes: routes` 的缩写
+  routes: constantRoute,
 });
 
-const loadViewComponent = (component: string) => () =>
+const loadViewComponent = (component: string | any) => () =>
   import(`@/views/${component}.vue`);
 
 const fetchMenu = () => {
   const userId = localStorage.getItem('userId') || '';
   return getRoutes(userId);
+};
+
+const loadComponent = (routes: Routes[]) => {
+  routes.forEach((route: Routes) => {
+    route.component = loadViewComponent(route.component);
+    if (Array.isArray(route.children)) {
+      loadComponent(route.children);
+    }
+  });
+  return routes as RouteRecordRaw[];
 };
 
 const dynamicAddRoute = async () => {
@@ -52,12 +63,16 @@ const dynamicAddRoute = async () => {
       status,
       msg,
       data: { routes = [] },
-    } = await fetchMenu();
-    routes.forEach((route: Routes) => {
+    } = resData;
+
+    // 加载component
+    const RecordRawRoutes = loadComponent(routes);
+    RecordRawRoutes.forEach((route: any) => {
       router.addRoute({
         path: route.path,
         name: route.name,
-        component: loadViewComponent(route.component),
+        component: route.component,
+        children: route.children,
       });
     });
     router.addRoute({

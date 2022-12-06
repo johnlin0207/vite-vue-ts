@@ -15,11 +15,9 @@ import { reactive, ref } from 'vue';
 import { ElMessage, ElLoading } from 'element-plus';
 import { login } from '@/api/login';
 import { Res } from '@/utils/interface';
+import md5 from 'js-md5';
 
 const router = useRouter();
-// const store = useCounterStore();
-// const { increment } = useCounterStore();
-// const { count } = reactive(store);
 
 const username = ref('');
 const pwd = ref('');
@@ -27,7 +25,6 @@ const pwd = ref('');
 const loginFn = () => {
   const u = username.value;
   const p = pwd.value;
-  console.log(u, p);
   if (u && p) {
     const loading = ElLoading.service({
       lock: true,
@@ -35,14 +32,14 @@ const loginFn = () => {
       background: 'rgba(0, 0, 0, 0.7)',
     });
 
-    login({ username: u, pwd: p })
+    login({ username: u, pwd: md5(p) })
       .then((res) => {
-        console.log(res);
         const {
           data: { token, userId },
         } = res;
         localStorage.setItem('token', token);
         localStorage.setItem('userId', userId);
+        localStorage.setItem('username', u);
         router.push('/');
       })
       .catch((err: any) => {
