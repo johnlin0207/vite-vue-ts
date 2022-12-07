@@ -7,8 +7,11 @@ export interface Res {
 export interface Routes {
   path: string;
   name: string;
+  id: string;
+  parentId: string | null;
+  component: string | object;
   children?: Array<Routes>;
-  component: any;
   redirect?: string;
-  meta?: object;
+  hidden?: boolean;
+  meta?: object | null;
 }

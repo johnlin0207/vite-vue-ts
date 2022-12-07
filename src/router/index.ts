@@ -40,9 +40,49 @@ const router = createRouter({
 const loadViewComponent = (component: string | any) => () =>
   import(`@/views/${component}.vue`);
 
-const fetchMenu = () => {
+const convert = (plainList: Routes[]): Routes[] => {
+  const nestedList: Routes[] = [];
+  // 找出最外层
+  for (const item of plainList) {
+    if (!item.parentId) {
+      nestedList.push(item);
+    }
+  }
+
+  const loop = (list: Routes[]) => {
+    // 对每个最外层的节点找孩子
+    for (const item of list) {
+      // 在原始数组中找
+      for (const iterator of plainList) {
+        if (iterator.parentId === item.id) {
+          item.children
+            ? item.children.push(iterator)
+            : (item.children = [iterator]);
+        }
+      }
+      if (item.children) {
+        loop(item.children);
+      }
+    }
+  };
+
+  loop(nestedList);
+  return nestedList;
+};
+
+const fetchMenu = async (): Promise<Routes[]> => {
   const userId = localStorage.getItem('userId') || '';
-  return getRoutes(userId);
+  const resData = await getRoutes(userId);
+  if (isSuccess(resData)) {
+    const {
+      data: { routes = [] },
+    } = resData;
+    const nestedRouteList = convert(routes);
+    return nestedRouteList;
+  } else {
+    ElMessage.error(resData.msg || request.fail);
+    return [];
+  }
 };
 
 const loadComponent = (routes: Routes[]) => {
@@ -57,32 +97,23 @@ const loadComponent = (routes: Routes[]) => {
 
 const dynamicAddRoute = async () => {
   // 请求
-  const resData = await fetchMenu();
-  if (isSuccess(resData)) {
-    const {
-      status,
-      msg,
-      data: { routes = [] },
-    } = resData;
-
-    // 加载component
-    const RecordRawRoutes = loadComponent(routes);
-    RecordRawRoutes.forEach((route: any) => {
-      router.addRoute({
-        path: route.path,
-        name: route.name,
-        component: route.component,
-        children: route.children,
-      });
-    });
+  const routes = await fetchMenu();
+  // 加载component
+  const RecordRawRoutes = loadComponent(routes);
+  RecordRawRoutes.forEach((route: any) => {
     router.addRoute({
-      path: '/:catchAll(.*)',
-      redirect: '/404',
+      path: route.path,
+      name: route.name,
+      component: route.component,
+      children: route.children,
     });
-    hasSetRoute = true;
-  } else {
-    ElMessage.error(resData.msg || request.fail);
-  }
+  });
+  // 最后添加404的捕获
+  router.addRoute({
+    path: '/:catchAll(.*)',
+    redirect: '/404',
+  });
+  hasSetRoute = true;
 };
 
 router.beforeEach(async (to, from, next) => {

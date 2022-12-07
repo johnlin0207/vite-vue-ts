@@ -1,16 +1,11 @@
 <template>
   <Header></Header>
-  <el-row>
-    <el-col :span="6"
-      ><div class="grid-content ep-bg-purple-dark">
-        <MenuTree></MenuTree>
-      </div>
-    </el-col>
-    <el-col :span="18"
-      ><div class="grid-content ep-bg-purple-dark">
-        <router-view></router-view></div
-    ></el-col>
-  </el-row>
+  <div class="layout">
+    <MenuTree></MenuTree>
+    <div class="contentWidth">
+      <router-view></router-view>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -20,4 +15,13 @@ import Header from '@/components/Home/Header.vue';
 import MenuTree from '@/components/Home/MenuTree.vue';
 </script>
 
-<style scoped></style>
+<style scoped>
+.layout {
+  display: flex;
+  padding: 5px;
+}
+
+.contentWidth {
+  flex: 1;
+}
+</style>

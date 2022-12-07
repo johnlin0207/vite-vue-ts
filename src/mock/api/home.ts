@@ -1,5 +1,5 @@
 import Mocks from 'mockjs';
-import { Res } from '@/utils/interface';
+import { Res, Routes } from '@/utils/interface';
 
 const tipList = [
   {
@@ -53,28 +53,52 @@ const routesList = [
   {
     path: '/',
     name: 'home',
-    component: 'Home',
+    component: 'Layout',
     redirect: '',
-    hidden: 'false',
-    meta: '',
+    hidden: false,
+    meta: null,
+    id: '1',
+    parentId: null,
   },
   {
     path: '/menu1',
     name: 'menu1',
-    component: 'Menu_1',
+    component: 'Layout',
     redirect: '',
-    hidden: 'false',
-    meta: '',
-    children: [
-      {
-        path: 'menu1_1',
-        name: 'menu1_1',
-        component: 'Menu_1_1',
-        redirect: '',
-        hidden: 'false',
-        meta: '',
-      },
-    ],
+    hidden: false,
+    meta: null,
+    id: '2',
+    parentId: null,
+  },
+  {
+    path: 'menu1_1',
+    name: 'menu1_1',
+    component: 'Menu_1_1',
+    redirect: '',
+    hidden: false,
+    meta: null,
+    id: '3',
+    parentId: '2',
+  },
+  {
+    path: '/menu2',
+    name: 'menu2',
+    component: 'Layout',
+    redirect: '',
+    hidden: false,
+    meta: null,
+    id: '4',
+    parentId: null,
+  },
+  {
+    path: '',
+    name: 'menu2',
+    component: 'Menu2',
+    redirect: '',
+    hidden: false,
+    meta: null,
+    id: '5',
+    parentId: '4',
   },
 ];
 

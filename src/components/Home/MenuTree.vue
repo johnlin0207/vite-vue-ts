@@ -1,13 +1,13 @@
 <template>
-  <el-row class="tac">
-    <el-col :span="12">
-      <h5 class="mb-2">Default colors</h5>
+  <el-row>
+    <el-col>
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
         @select="selectItem"
+        :collapse="isCollapse"
       >
         <el-sub-menu index="/menu1/">
           <template #title>
@@ -19,7 +19,7 @@
             <el-menu-item index="/menu1/menu1_2">item two</el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
-        <el-menu-item index="/menu2">
+        <el-menu-item index="/menu2/">
           <el-icon><icon-menu /></el-icon>
           <span>Navigator Two</span>
         </el-menu-item>
@@ -38,12 +38,15 @@
 
 <script lang="ts" setup>
 import router from '@/router';
+import { ref } from 'vue';
 import {
   Document,
   Menu as IconMenu,
   Location,
   Setting,
 } from '@element-plus/icons-vue';
+const isCollapse = ref(false);
+
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
 };
