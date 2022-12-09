@@ -9,7 +9,9 @@ import { request } from '@/utils/constant';
 import { ElMessage } from 'element-plus';
 import { RouteRecordRaw } from 'vue-router';
 import { useRouterStore } from '@/store/router';
+import pinia from '@/pinia';
 
+const store = useRouterStore(pinia);
 const constantRoute = [
   {
     path: '/login',
@@ -97,7 +99,6 @@ const loadComponent = (routes: Routes[]) => {
 };
 
 const dynamicAddRoute = async () => {
-  const store = useRouterStore();
   // 请求
   const routes = await fetchMenu();
   store.set(routes);
@@ -121,7 +122,6 @@ const dynamicAddRoute = async () => {
 router.beforeEach(async (to, from, next) => {
   // 判断是否已经登录
   const token = localStorage.getItem('token');
-  const store = useRouterStore();
   const { stateRouter } = store;
   // 已登录但未设置权限路由
   if (token && !stateRouter) {
