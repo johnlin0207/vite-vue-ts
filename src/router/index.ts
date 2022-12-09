@@ -8,8 +8,7 @@ import { Routes } from '@/utils/interface';
 import { request } from '@/utils/constant';
 import { ElMessage } from 'element-plus';
 import { RouteRecordRaw } from 'vue-router';
-
-let hasSetRoute = false;
+import { useRouterStore } from '@/store/router';
 
 const constantRoute = [
   {
@@ -40,6 +39,7 @@ const router = createRouter({
 const loadViewComponent = (component: string | any) => () =>
   import(`@/views/${component}.vue`);
 
+// 扁平结构菜单转换为嵌套结构
 const convert = (plainList: Routes[]): Routes[] => {
   const nestedList: Routes[] = [];
   // 找出最外层
@@ -85,6 +85,7 @@ const fetchMenu = async (): Promise<Routes[]> => {
   }
 };
 
+// 递归给每一级加载component
 const loadComponent = (routes: Routes[]) => {
   routes.forEach((route: Routes) => {
     route.component = loadViewComponent(route.component);
@@ -96,8 +97,10 @@ const loadComponent = (routes: Routes[]) => {
 };
 
 const dynamicAddRoute = async () => {
+  const store = useRouterStore();
   // 请求
   const routes = await fetchMenu();
+  store.set(routes);
   // 加载component
   const RecordRawRoutes = loadComponent(routes);
   RecordRawRoutes.forEach((route: any) => {
@@ -113,14 +116,15 @@ const dynamicAddRoute = async () => {
     path: '/:catchAll(.*)',
     redirect: '/404',
   });
-  hasSetRoute = true;
 };
 
 router.beforeEach(async (to, from, next) => {
   // 判断是否已经登录
   const token = localStorage.getItem('token');
+  const store = useRouterStore();
+  const { stateRouter } = store;
   // 已登录但未设置权限路由
-  if (token && !hasSetRoute) {
+  if (token && !stateRouter) {
     // 重新设置权限路由
     await dynamicAddRoute();
     next(to);
