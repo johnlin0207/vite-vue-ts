@@ -11,11 +11,12 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { useRouter } from 'vue-router';
-import { reactive, ref } from 'vue';
+import { reactive, ref, toRaw } from 'vue';
 import { ElMessage, ElLoading } from 'element-plus';
 import { login } from '@/api/login';
-import { Res } from '@/utils/interface';
 import md5 from 'js-md5';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 const router = useRouter();
 
@@ -23,15 +24,10 @@ const username = ref('');
 const pwd = ref('');
 
 const loginFn = () => {
+  NProgress.start();
   const u = username.value;
   const p = pwd.value;
   if (u && p) {
-    const loading = ElLoading.service({
-      lock: true,
-      text: 'Loading',
-      background: 'rgba(0, 0, 0, 0.7)',
-    });
-
     login({ username: u, pwd: md5(p) })
       .then((res) => {
         const {
@@ -40,14 +36,21 @@ const loginFn = () => {
         localStorage.setItem('token', token);
         localStorage.setItem('userId', userId);
         localStorage.setItem('username', u);
-        router.push('/');
+        if (
+          router.currentRoute.value.redirectedFrom &&
+          router.currentRoute.value.redirectedFrom.fullPath !== '/login'
+        ) {
+          router.push(router.currentRoute.value.redirectedFrom.fullPath);
+        } else {
+          router.push('/');
+        }
       })
       .catch((err: any) => {
         console.log(err);
         ElMessage.error(err.message);
       })
       .finally(() => {
-        loading.close();
+        NProgress.done();
       });
   } else {
     ElMessage.error('Oops, this is a error message.');

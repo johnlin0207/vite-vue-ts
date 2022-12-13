@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/nprogress": "^0.2.0",
     "axios": "^1.2.0",
     "element-plus": "^2.2.22",
     "js-md5": "^0.7.3",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.26",
     "vue": "^3.2.41",
     "vue-router": "^4.1.6"

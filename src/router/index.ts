@@ -10,6 +10,8 @@ import { ElMessage } from 'element-plus';
 import { RouteRecordRaw } from 'vue-router';
 import { useRouterStore } from '@/store/router';
 import pinia from '@/pinia';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 const store = useRouterStore(pinia);
 const constantRoute = [
@@ -32,6 +34,8 @@ const constantRoute = [
     meta: { title: '404' },
   },
 ];
+
+const whiteList = ['/login', '/404'];
 
 const router = createRouter({
   history: createWebHistory(),
@@ -123,16 +127,30 @@ router.beforeEach(async (to, from, next) => {
   // 判断是否已经登录
   const token = localStorage.getItem('token');
   const { stateRouter } = store;
-  // 已登录但未设置权限路由
-  if (token && !stateRouter) {
-    // 重新设置权限路由
-    await dynamicAddRoute();
-    next(to);
-  } else if (!token && to.path === '/') {
-    next({ name: 'login' });
-  } else {
-    // 未登录
+  // 白名单放行
+  if (whiteList.includes(to.fullPath)) {
     next();
+  } else if (token) {
+    if (stateRouter) {
+      NProgress.done();
+      next();
+    } else {
+      // 重新设置权限路由
+      await dynamicAddRoute();
+      NProgress.done();
+      next(to);
+    }
+  } else {
+    NProgress.done();
+    // 未登录跳转需要鉴权页面先跳登录
+    if (to.fullPath !== '/login') {
+      next({
+        path: '/login',
+        params: { redirect: encodeURIComponent(to.fullPath) },
+      });
+    } else {
+      next();
+    }
   }
 });
 
