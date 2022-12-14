@@ -20,8 +20,8 @@ import MenuTree from '@/components/Home/MenuTree.vue';
   display: flex;
   padding: 5px;
 }
-
 .contentWidth {
   flex: 1;
+  padding: 0 10px 0 10px;
 }
 </style>

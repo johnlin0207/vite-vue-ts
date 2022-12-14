@@ -19,10 +19,8 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
 const router = useRouter();
-
 const username = ref('');
 const pwd = ref('');
-
 const loginFn = () => {
   NProgress.start();
   const u = username.value;
