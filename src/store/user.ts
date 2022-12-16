@@ -5,7 +5,7 @@ interface State {
   userInfo: UserInfo;
 }
 
-export const useUserStore = defineStore('router', {
+export const useUserStore = defineStore('user', {
   state: (): State => ({ userInfo: { roles: [] } }),
   actions: {
     set(r: UserInfo) {

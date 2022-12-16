@@ -13,12 +13,6 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import Header from '@/components/Home/Header.vue';
 import MenuTree from '@/components/Home/MenuTree.vue';
-import { dynamicAddRoute } from '@/router/permission';
-import { onMounted } from 'vue';
-
-onMounted(() => {
-  dynamicAddRoute();
-});
 </script>
 
 <style scoped>

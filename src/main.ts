@@ -5,6 +5,7 @@ import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
 import pinia from './pinia';
 import router from './router/index';
+import '@/router/permission';
 import './mock/index';
 
 const app = createApp(App);
