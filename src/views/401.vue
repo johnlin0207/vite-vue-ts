@@ -1,11 +1,11 @@
 <template>
-  <router-view></router-view>
+  <p>401 Unauthorized</p>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent } from 'vue';
 export default defineComponent({
-  name: 'App',
+  name: '404',
   setup() {
     return {};
   },

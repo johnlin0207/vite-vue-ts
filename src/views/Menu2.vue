@@ -10,7 +10,7 @@
 import { onMounted, ref } from 'vue';
 import { getTables } from '@/api/home';
 import { isSuccess } from '@/utils/util';
-import { request } from '@/utils/constant';
+import { REQUEST } from '@/utils/constant';
 import { ElMessage } from 'element-plus';
 
 let tableData = ref([]);
@@ -20,7 +20,7 @@ onMounted(() => {
     if (isSuccess(res)) {
       tableData.value = res.data;
     } else {
-      ElMessage.error(res.msg || request.fail);
+      ElMessage.error(res.msg || REQUEST.FAIL);
     }
   });
 });

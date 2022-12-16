@@ -1,5 +1,5 @@
-const request = {
-  fail: '请求出错',
+const REQUEST = {
+  FAIL: '请求出错',
 };
 
-export { request };
+export { REQUEST };

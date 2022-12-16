@@ -15,3 +15,7 @@ export interface Routes {
   hidden?: boolean;
   meta?: object | null;
 }
+
+export interface UserInfo {
+  roles: Array<string>;
+}

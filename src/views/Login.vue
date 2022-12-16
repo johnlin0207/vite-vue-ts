@@ -34,11 +34,9 @@ const loginFn = () => {
         localStorage.setItem('token', token);
         localStorage.setItem('userId', userId);
         localStorage.setItem('username', u);
-        if (
-          router.currentRoute.value.redirectedFrom &&
-          router.currentRoute.value.redirectedFrom.fullPath !== '/login'
-        ) {
-          router.push(router.currentRoute.value.redirectedFrom.fullPath);
+        const redirectPath = router.currentRoute.value.redirectedFrom;
+        if (redirectPath && redirectPath.fullPath !== '/login') {
+          router.push(redirectPath.fullPath);
         } else {
           router.push('/');
         }

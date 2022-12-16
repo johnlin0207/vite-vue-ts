@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useRouter, useRoute, onBeforeRouteUpdate } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import {
   Document,
   Menu as IconMenu,
