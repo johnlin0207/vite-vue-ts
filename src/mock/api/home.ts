@@ -21,7 +21,7 @@ const routesList = [
     redirect: '',
     hidden: false,
     meta: {
-      roles: '123',
+      roles: 'guest',
     },
     id: '3',
     parentId: '2',
@@ -45,7 +45,7 @@ const routesList = [
     redirect: '',
     hidden: false,
     meta: {
-      roles: 'asd',
+      roles: 'guest',
     },
     id: '5',
     parentId: '4',

@@ -22,10 +22,10 @@ const router = useRouter();
 const username = ref('');
 const pwd = ref('');
 const loginFn = () => {
-  NProgress.start();
   const u = username.value;
   const p = pwd.value;
   if (u && p) {
+    NProgress.start();
     login({ username: u, pwd: md5(p) })
       .then((res) => {
         const {
@@ -49,7 +49,7 @@ const loginFn = () => {
         NProgress.done();
       });
   } else {
-    ElMessage.error('Oops, this is a error message.');
+    ElMessage.error('请正确输入用户名ß和密码');
   }
 };
 </script>

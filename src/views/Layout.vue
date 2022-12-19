@@ -1,9 +1,13 @@
 <template>
-  <Header></Header>
   <div class="layout">
-    <MenuTree></MenuTree>
-    <div class="contentWidth">
-      <router-view></router-view>
+    <div class="header">
+      <Header></Header>
+    </div>
+    <div class="main">
+      <MenuTree></MenuTree>
+      <div class="content">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
@@ -18,10 +22,18 @@ import MenuTree from '@/components/Home/MenuTree.vue';
 <style scoped>
 .layout {
   display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
   padding: 5px;
 }
-.contentWidth {
+.content {
   flex: 1;
   padding: 0 10px 0 10px;
+  overflow: auto;
 }
 </style>

@@ -1,5 +1,10 @@
 import { Res } from '@/utils/interface';
 
+/**
+ * 判断请求返回是否为逻辑成功,status为'0'表示逻辑成功
+ * @param resData {status: string, msg: string, data: any}
+ * @returns
+ */
 const isSuccess = (resData: Res) => {
   return resData.status === '0';
 };
