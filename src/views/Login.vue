@@ -49,7 +49,7 @@ const loginFn = () => {
         NProgress.done();
       });
   } else {
-    ElMessage.error('请正确输入用户名ß和密码');
+    ElMessage.error('请正确输入用户名和密码');
   }
 };
 </script>

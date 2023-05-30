@@ -9,6 +9,7 @@ const constantRoute = [
     path: '/',
     name: 'home',
     component: Layout,
+    // meta: { keepAlive: true },
   },
   {
     path: '/login',

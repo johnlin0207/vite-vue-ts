@@ -17,13 +17,25 @@ const routesList = [
   {
     path: 'menu1_1',
     name: 'menu1_1',
-    component: 'Menu_1_1',
+    component: 'Menu1_1',
     redirect: '',
     hidden: false,
     meta: {
       roles: 'guest',
     },
     id: '3',
+    parentId: '2',
+  },
+  {
+    path: 'menu1_2',
+    name: 'menu1_2',
+    component: 'Menu1_2',
+    redirect: '',
+    hidden: false,
+    meta: {
+      roles: 'guest',
+    },
+    id: '4',
     parentId: '2',
   },
   {
@@ -35,7 +47,7 @@ const routesList = [
     meta: {
       roles: '',
     },
-    id: '4',
+    id: '5',
     parentId: null,
   },
   {
@@ -47,8 +59,8 @@ const routesList = [
     meta: {
       roles: 'guest',
     },
-    id: '5',
-    parentId: '4',
+    id: '6',
+    parentId: '5',
   },
 ];
 

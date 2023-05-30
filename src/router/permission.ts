@@ -13,7 +13,7 @@ import { REQUEST } from '@/utils/constant';
 
 const userStore = useUserStore(pinia);
 const routerStore = useRouterStore(pinia);
-const whiteList = ['/login', '/404'];
+const whiteList = ['/login', '/404', '/about'];
 const loadViewComponent = (component: string | any) => () =>
   import(`@/views/${component}.vue`);
 
@@ -28,6 +28,7 @@ const loadComponent = (routes: Routes[]) => {
   return routes as RouteRecordRaw[];
 };
 
+// 请求用户信息
 const fetchUserInfo = async () => {
   const userId = localStorage.getItem('userId') || '';
   const userInfo = await getUserInfo(userId);
@@ -96,6 +97,7 @@ const fetchMenu = async (): Promise<Routes[]> => {
   }
 };
 
+// 请求用户权限路由并动态加载
 const dynamicAddRoute = async () => {
   const routes = await fetchMenu();
   routerStore.set(routes);
